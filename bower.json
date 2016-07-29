@@ -13,9 +13,5 @@
   "dependencies": {
     "jquery": "^2.2.0",
     "sandal": "https://github.com/marvin1023/sandal.git"
-  },
-  "devDependencies": {
-    "weui": "^0.4.3",
-    "react": "^15.2.1"
   }
 }
