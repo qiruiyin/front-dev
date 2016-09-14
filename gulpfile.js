@@ -45,20 +45,28 @@
 		}));
 	});
 
-  	// gulp-css-spriter
+  	// gulp-spritemith
 	// 制作雪碧图
 	// 单独制作雪碧图
-	gulp.task('sprite', function(){
-		// console.log(gulp.src(_.css + '/*.css'));
-		return gulp.src(_.css + '/*.css')
-	      	.pipe($.cssSpriter({
-				// 生成的spriter的位置
-	        	'spriteSheet': _.img + '/spriter.png',
-	        	// 生成样式文件图片引用地址的路径
-	        	'pathToSpriteSheetFromCSS': '../img/spriter.png'
-			}))
-	});
+	var spritesmith = require("gulp.spritesmith");
 
+	gulp.task('sprite', function () {
+		var demo = gulp.src('app/img/demo/*.jpg')
+			.pipe(spritesmith({
+				imgName: './app/img/demo.png',
+				cssName: './app/sass/_spritedemo.scss',
+				cssFormat: 'scss'
+			}))
+			.pipe(gulp.dest('./'));
+		var test = gulp.src('app/img/test/*.jpg')
+			.pipe(spritesmith({
+				imgName: './app/img/test.png',
+				cssName: './app/sass/_spritetest.scss',
+				cssFormat: 'scss'
+			}))
+			.pipe(gulp.dest('./'));
+		return $.mergeStream(demo, test);
+	});
 	// gulp-sass, gulp-autoprefixer, gulp-sourcemaps
 	// 将sass预处理为css，
 	// 使用autoprefixer来补全浏览器兼容的css

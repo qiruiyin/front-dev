@@ -40,21 +40,3 @@
 ### SCSS 文件说明
 
 * 参考https://github.com/marvin1023/sandal.git 和 https://github.com/jimyuan/tmpl.git
-
-### 雪碧图生成说明
-
-  1、请修改gulp-css-spriter/lib/map-over......文件的第48行开始替换为，并在想合并的雪碧图css文件后加?__spriter
-  
-	// background-image always has a url 且判断url是否有?__spriter后缀
-	if(transformedDeclaration.property === 'background-image' && /\?__spriter/i.test(transformedDeclaration.value)) {
-	    transformedDeclaration.value = transformedDeclaration.value.replace('?__spriter','');
-	    return cb(transformedDeclaration, declarationIndex, declarations);
-	  }
-	  // Background is a shorthand property so make sure `url()` is in there 且判断url是否有?__spriter后缀
-	  else if(transformedDeclaration.property === 'background' && /\?__spriter/i.test(transformedDeclaration.value)) {
-	    transformedDeclaration.value = transformedDeclaration.value.replace('?__spriter','');
-	    var hasImageValue = spriterUtil.backgroundURLRegex.test(transformedDeclaration.value);
-	    if(hasImageValue) {
-	        return cb(transformedDeclaration, declarationIndex, declarations);
-	    }
-	  }
