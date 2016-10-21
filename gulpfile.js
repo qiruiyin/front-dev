@@ -79,7 +79,6 @@
 		        outputStyle: 'expanded',
 		        includePaths: [ './bower_components/' ]
 		    }))
-	      	.pipe($.cssSpriter())
 			.pipe($.autoprefixer({
 				browers: ['last 2 versions','safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4']
 			}))
@@ -225,7 +224,7 @@
   	gulp.task('test',  ['jshint', 'scss-lint']);
 	// 默认
 	gulp.task('default', ['html', 'sass', 'rimraf', 'webpack'], function(){
-		gulp.start('rimraf-rev');
+		gulp.start('dist');
 		
 	});
 })(require('gulp'), require('gulp-load-plugins'));
