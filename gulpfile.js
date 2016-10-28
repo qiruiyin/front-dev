@@ -12,7 +12,8 @@
 	        tmpl: 'app/src',        
 	        js:   'app/js',
 	        css:  'app/css',
-	        img:  'app/img'
+	        img:  'app/img',
+	        pkgs: 'app/pkgs'
 		},
 		files = [
 		    'app/*.html',
@@ -179,16 +180,24 @@
 	        .pipe(gulp.dest(_.dist));
 	});
 
+	gulp.task('copy', function() {
+		return gulp.src(_.pkgs + '/**/*')
+			.pipe($.plumber())
+			.pipe($.useref())
+			.pipe($.if('*.js', $.uglify()))
+			.pipe($.if('*.css', $.cssnano()))
+	 		.pipe(gulp.dest(_.dist + '/pkgs'));
+	});
 	// js、css、html压缩处理（可选）
 	// 打包到dist文件夹下
-	gulp.task('dist', ['image', 'rename'], function(){
+	gulp.task('dist', ['image', 'copy'], function(){
 		return gulp.src('app/*.html')
 			.pipe($.plumber())
 			.pipe($.useref())
 			.pipe($.if('*.js', $.uglify()))
-			.pipe($.if('*.js', $.rev()))
+			// .pipe($.if('*.js', $.rev()))
 			.pipe($.if('*.css', $.cssnano()))
-			.pipe($.if('*.css', $.rev()))
+			// .pipe($.if('*.css', $.rev()))
 			.pipe(gulp.dest(_.dist));
 	});
 
@@ -223,7 +232,7 @@
 	// 检查css和js
   	gulp.task('test',  ['jshint', 'scss-lint']);
 	// 默认
-	gulp.task('default', ['html', 'sass', 'rimraf', 'webpack'], function(){
+	gulp.task('default', ['html', 'sass', 'rimraf', 'webpack', 'dist'], function(){
 		gulp.start('dist');
 		
 	});
